@@ -121,7 +121,9 @@
         return (
           <div className="app">
             <div className="left">
-              <i className="nf nf-linux-archlinux"></i>
+              <div className="border2">
+              <i className="nf nf-linux-archlinux"></i> Akura
+              </div>
               {output.glazewm && (
                 <>
                   {output.glazewm.isPaused && (
@@ -170,11 +172,33 @@
                   ))}
                 </div>
               )}
-            </div>
+              {output.network && (
+                <div className="border2">
+                  {getNetworkIcon(output.network)}
+                  ArchBtw
+                </div>
+              )}
 
-            <div className="center">
+              {output.battery && (
+                <div className="border2">
+                  {/* Show icon for whether battery is charging. */}
+                  {output.battery.isCharging && (
+                    <i className="nf nf-md-power_plug charging-icon"></i>
+                  )}
+                  {getBatteryIcon(output.battery)} 
+                  {Math.round(output.battery.chargePercent)}%
+                </div>
+              )}
+            </div>
+          
+            
+        
+         <div className="center">
+          <div className="border2">
               Now Playing: {output.media?.currentSession?.title} -&nbsp;
               {output.media?.currentSession?.artist} &nbsp;
+          </div>
+          
               <button class ="media-button" onClick={() => output.media?.togglePlayPause()}>
                 pause
               </button>
@@ -186,22 +210,17 @@
               
               
 
-              {output.network && (
-                <div className="right">
-                  {getNetworkIcon(output.network)}
-                  ArchBtw
-                </div>
-              )}
+              
 
               {output.memory && (
-                <div className="weather">&nbsp;|&nbsp;
+                <div className="border2">
                   <i className="nf nf-fae-chip"></i>
                   {Math.round(output.memory.usage)}%
                 </div>
               )}
 
               {output.cpu && (
-                <div className="weather">&nbsp;|&nbsp;
+                <div className="border2">
                   <i className="nf nf-oct-cpu"></i>
 
                   {/* Change the text color if the CPU usage is high. */}
@@ -213,25 +232,16 @@
                 </div>
               )}
 
-              {output.battery && (
-                <div className="weather">&nbsp;|&nbsp;
-                  {/* Show icon for whether battery is charging. */}
-                  {output.battery.isCharging && (
-                    <i className="nf nf-md-power_plug charging-icon"></i>
-                  )}
-                  {getBatteryIcon(output.battery)} 
-                  {Math.round(output.battery.chargePercent)}%
-                </div>
-              )}
+              
 
               {output.weather && (
-                <div className="weather">&nbsp;|&nbsp;
+                <div className="border2">
                   {getWeatherIcon(output.weather)}
                   {Math.round(output.weather.celsiusTemp)}°C
                 </div>
               )}
 
-            <div className="weather">&nbsp;|&nbsp;
+            <div className="border2">
               <i className="nf nf-fa-clock"></i>
               {output.date?.formatted}
             </div>

@@ -5,12 +5,12 @@
  @import 'https://www.nerdfonts.com/assets/css/webfont.css';
 
  i {
-   color: rgba(193, 0, 0, 0.95);
+   color: rgba(168, 62, 62, 0.95);
    margin-right: 7px;
  }
  
  body {
-   color: rgb(255 255 255 / 90%);
+   color: rgba(255, 255, 255, 0.95);
    font-family: ui-monospace, monospace;
    font-size: 12px;
    overflow: hidden;
@@ -29,9 +29,26 @@
    height: 100%;
  }
  
- #root {
-   border-bottom: 2px solid rgba(64, 0, 0, 0.851);
-   background: linear-gradient(rgba(255, 0, 0, 0.574), rgba(181, 93, 93, 0.316));
+ .border {
+   border: 2px solid rgba(0, 0, 0, 0.851);
+   border-radius: 20em;
+   background: linear-gradient(rgba(24, 0, 0, 0.921), rgba(190, 4, 4, 0.493));
+ }
+ .border2 {
+   border: 2px solid rgba(168, 62, 62, 0.95);
+   border-radius: 20em;
+   line-height: 1;
+   padding: 4px 8px;
+   margin-right: 2px;
+   margin-left: 2px;
+   background: linear-gradient(rgb(33, 28, 28), rgb(60, 54, 54));
+   height:25px;
+ }
+ .border3 {
+   border: 2px solid rgba(168, 62, 62, 0.95);
+   border-radius: 20em;
+   background: linear-gradient(rgba(24, 0, 0, 0.921), rgba(190, 4, 4, 0.493));
+   height:25px;
  }
  
  .app {
@@ -86,7 +103,8 @@
  }
  
  .workspace {
-   background: rgba(193, 0, 0, 0.95);
+   border: 2px solid rgba(168, 62, 62, 0.95);
+   background: rgba(168, 62, 62, 0.95); 
    margin-right: 4px;
    padding: 4px 8px;
    color: rgb(255 255 255 / 90%);
@@ -110,13 +128,14 @@
  .binding-mode,
  .tiling-direction,
  .paused-button {
-   background: rgb(255 255 255 / 15%);
+   border: 2px solid rgba(168, 62, 62, 0.95);
    color: rgb(255 255 255 / 90%);
    border-radius: 2px;
    line-height: 1;
    padding: 4px 8px;
    cursor: pointer;
    border-color: 1px black;
+   background: linear-gradient(rgb(33, 28, 28), rgb(60, 54, 54));
  
  }
  
@@ -132,7 +151,7 @@
    position: relative;
  }
  
- .mediaShit {
+ .mediaStuff {
    position: absolute;
    left: 300px;
    top: 11px;
@@ -159,14 +178,14 @@
  
  /* General styling for media buttons */
  .media-button {
-   background: rgb(255 255 255 / 15%);
+   border: 2px solid rgba(168, 62, 62, 0.95);
+   background: linear-gradient(rgb(33, 28, 28), rgb(60, 54, 54));
    color: rgb(255 255 255 / 90%);
-   border-radius: 2px;
+   border-radius: 20em;
    line-height: 1;
    padding: 4px 8px;
    margin-right: 2px;
    margin-left: 2px;
-   border-color: 1px black;
    cursor: cell;
    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
  }
