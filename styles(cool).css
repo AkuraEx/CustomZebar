@@ -1,0 +1,173 @@
+/**
+ * Import the Nerdfonts icon font.
+ * Ref https://www.nerdfonts.com/cheat-sheet for a cheatsheet of available Nerdfonts icons.
+ */
+ @import 'https://www.nerdfonts.com/assets/css/webfont.css';
+
+ i {
+   color: rgba(193, 0, 0, 0.95);
+   margin-right: 7px;
+ }
+ 
+ body {
+   color: rgb(255 255 255 / 90%);
+   font-family: ui-monospace, monospace;
+   font-size: 12px;
+   overflow: hidden;
+ }
+ 
+ div,
+ span,
+ p {
+   cursor: crosshair;
+   user-select: none;
+ }
+ 
+ html,
+ body,
+ #root {
+   height: 100%;
+ }
+ 
+ #root {
+   border-bottom: 2px solid rgba(64, 0, 0, 0.851);
+   background: linear-gradient(rgba(255, 0, 0, 0.574), rgba(181, 93, 93, 0.316));
+ }
+ 
+ .app {
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   align-items: center;
+   height: 100%;
+   padding: 4px 1.5vw;
+   font-family: ui-monospace, monospace; 
+   font-size: 14px;
+   font-weight: 300;
+   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+ 
+ }
+ 
+ .left,
+ .center,
+ .right {
+   display: flex;
+   align-items: center;
+   white-space: nowrap;
+ }
+ 
+ .center {
+   justify-self: center;
+ }
+ 
+ .right {
+   justify-self: end;
+   margin-left: 20px;
+ }
+ 
+ .logo,
+ .paused-button,
+ .network,
+ .memory,
+ .cpu,
+ .battery {
+   margin-right: 20px;
+ }
+ 
+ .binding-mode,
+ .tiling-direction {
+   margin-left: 3px;
+   margin-right: 5px;
+   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+ }
+ 
+ .workspaces {
+   display: flex;
+   align-items: center;
+ }
+ 
+ .workspace {
+   background: rgba(193, 0, 0, 0.95);
+   margin-right: 4px;
+   padding: 4px 8px;
+   color: rgb(255 255 255 / 90%);
+   border-radius: 2px;
+   cursor: pointer;
+   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+   border-color: 1px black;
+ 
+ 
+ 
+   &.displayed {
+     background: rgb(255 255 255 / 15%);
+   }
+ 
+   &.focused,
+   &:hover {
+     background: rgb(193, 0, 0, 0.95);
+   }
+ }
+ 
+ .binding-mode,
+ .tiling-direction,
+ .paused-button {
+   background: rgb(255 255 255 / 15%);
+   color: rgb(255 255 255 / 90%);
+   border-radius: 2px;
+   line-height: 1;
+   padding: 4px 8px;
+   cursor: pointer;
+   border-color: 1px black;
+ 
+ }
+ 
+ .binding-mode {
+   margin-right: 4px;
+ }
+ 
+ .cpu .high-usage {
+   color: #900029;
+ }
+ 
+ .battery {
+   position: relative;
+ }
+ 
+ .mediaShit {
+   position: absolute;
+   left: 300px;
+   top: 11px;
+ }
+ 
+ .battery .charging-icon {
+   position: absolute;
+   font-size: 7px;
+   left: -8px;
+   top: 3px;
+ }
+ 
+ /* From Uiverse.io by zymantas-katinas */ 
+ .button {
+   position: relative;
+   border: none;
+   background: transparent;
+   padding: 3;
+   outline: none;
+   cursor: pointer;
+   font-family: sans-serif;
+   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+ }
+ 
+ /* General styling for media buttons */
+ .media-button {
+   background: rgb(255 255 255 / 15%);
+   color: rgb(255 255 255 / 90%);
+   border-radius: 2px;
+   line-height: 1;
+   padding: 4px 8px;
+   margin-right: 2px;
+   margin-left: 2px;
+   border-color: 1px black;
+   cursor: cell;
+   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+ }
+ 
