@@ -21,29 +21,45 @@
       import React, {
         useState,
         useEffect,
+        useRef,
+        useMemo,
       } from 'https://esm.sh/react@18?dev';
       import { createRoot } from 'https://esm.sh/react-dom@18/client?dev';
       import * as zebar from 'https://esm.sh/zebar@2';
+      
 
       const providers = zebar.createProviderGroup({
-        network: { type: 'network' },
+        network: { type: 'network', refreshInterval: "20000"},
         glazewm: { type: 'glazewm' },
-        cpu: { type: 'cpu' },
-        date: { type: 'date', formatting: 'TT' },
-        media: { type: 'media' },
-        battery: { type: 'battery' },
-        memory: { type: 'memory' },
-        weather: { type: 'weather' },
+        cpu: { type: 'cpu', refreshInterval: "20000"},
+         media: { type: 'media', refreshInterval: "20000" },
+        date: { type: 'date', refreshInterval: "20000", formatting: 't' },
+        audio: { type: 'audio', refreshInterval: "20000"},
+        battery: { type: 'battery', refreshInterval: "20000" },
+        memory: { type: 'memory', refreshInterval: "20000" },
+        weather: { type: 'weather', refreshInterval: "20000" },
       });
 
       createRoot(document.getElementById('root')).render(<App />);
 
       function App() {
-        const [output, setOutput] = useState(providers.outputMap);
+    const [output, setOutput] = useState(providers.outputMap);
 
-        useEffect(() => {
-          providers.onOutput(() => setOutput(providers.outputMap));
-        }, []);
+    useEffect(() => {
+        const updateOutput = () => {
+            setOutput(prevOutput => {
+                // Prevent unnecessary updates by checking if the value actually changed
+                return prevOutput !== providers.outputMap ? providers.outputMap : prevOutput;
+            });
+        };
+
+        providers.onOutput(updateOutput);
+
+        return () => {
+            // Cleanup to avoid memory leaks
+            providers.offOutput(updateOutput);
+        };
+    }, []);
 
         // Get icon to show for current network status.
         function getNetworkIcon(networkOutput) {
@@ -118,66 +134,59 @@
           }
         }
 
+
+
+function MyControlledInput() {
+      const [value, setValue] = useState(output.audio?.defaultPlaybackDevice?.volume);
+      
+
+      const onChange = (event) => {
+        
+        setValue(event.target.value);
+        
+      };
+
+      const handleSliderInput = (e) => {
+      setValue(e.target.value);  // Update on each input (drag)
+      output.audio?.setVolume(parseInt(event.target.value));
+      };
+
+      return (
+        <>
+        <input id="audio-slider" 
+                    type="range" min="0" max="100" 
+                    onChange={onChange}
+                    onMouseUp={handleSliderInput}
+                    value={value}/>
+        </>
+      );
+    }
+
+
+
+
+      
+
+
+        //------------------------------------------------------------------//
+        //---------------------This is the Bar layout-----------------------//
+        //------------------------------------------------------------------//
+
         return (
           <div className="app">
             <div className="left">
               <div className="border2">
               <i className="nf nf-linux-archlinux"></i> Akura
               </div>
-              {output.glazewm && (
-                <>
-                  {output.glazewm.isPaused && (
-                    <button
-                      className="paused-button"
-                      onClick={() => glazewm.runCommand('wm-toggle-pause')}
-                    >
-                      PAUSED
-                    </button>
-                  )}
-                  <button
-                    className={`tiling-direction nf ${output.glazewm.tilingDirection === 'horizontal' ? 'nf-md-swap_horizontal' : 'nf-md-swap_vertical'}`}
-                    onClick={() =>
-                      output.glazewm.runCommand('toggle-tiling-direction')
-                    }
-                  ></button>
-                  {output.glazewm.bindingModes.map(bindingMode => (
-                    <button
-                      className="binding-mode"
-                      key={bindingMode.name}
-                      onClick={() =>
-                        output.glazewm.runCommand(
-                          `wm-disable-binding-mode --name ${bindingMode.name}`,
-                        )
-                      }
-                    >
-                      {bindingMode.displayName ?? bindingMode.name}
-                    </button>
-                  ))}
-                </>
-              )}
-              {output.glazewm && (
-                <div className="workspaces">
-                  {output.glazewm.currentWorkspaces.map(workspace => (
-                    <button
-                      className={`workspace ${workspace.hasFocus && 'focused'} ${workspace.isDisplayed && 'displayed'}`}
-                      onClick={() =>
-                        output.glazewm.runCommand(
-                          `focus --workspace ${workspace.name}`,
-                        )
-                      }
-                      key={workspace.name}
-                    >
-                      {workspace.displayName ?? workspace.name}
-                    </button>
-                  ))}
-                </div>
-              )}
+
+              
               {output.network && (
                 <div className="border2">
                   {getNetworkIcon(output.network)}
                   ArchBtw
                 </div>
               )}
+
 
               {output.battery && (
                 <div className="border2">
@@ -189,23 +198,53 @@
                   {Math.round(output.battery.chargePercent)}%
                 </div>
               )}
+
+
+              <button className ="audio-button" onClick={() => output.audio?.setVolume(30)}>
+                {(output.audio?.defaultPlaybackDevice?.volume >= 66) && (
+                    <i className="nf nf-md-volume_high"></i>
+                  )}
+                {(output.audio?.defaultPlaybackDevice?.volume >= 33 &&
+                  output.audio?.defaultPlaybackDevice?.volume < 66
+                ) && (
+                    <i className="nf nf-md-volume_medium"></i>
+                  )}
+                {(output.audio?.defaultPlaybackDevice?.volume >= 1 &&
+                  output.audio?.defaultPlaybackDevice?.volume < 33
+                ) && (
+                    <i className="nf nf-md-volume_low"></i>
+                  )}
+                {(output.audio?.defaultPlaybackDevice?.volume == 0) && (
+                    <i className="nf nf-md-volume_off"></i>
+                  )}
+                {output.audio?.defaultPlaybackDevice?.volume}%
+              </button>
+
+                    
+
+                    <MyControlledInput />
             </div>
-          
+
             
-        
-         <div className="center">
+
+            <div className="center">
           <div className="border2">
               Now Playing: {output.media?.currentSession?.title} -&nbsp;
               {output.media?.currentSession?.artist} &nbsp;
           </div>
           
-              <button class ="media-button" onClick={() => output.media?.togglePlayPause()}>
+              <button className ="media-button" onClick={() => output.media?.togglePlayPause()}>
                 pause
               </button>
-              <button class ="media-button" onClick={() => output.media?.next()}>
+              <button className ="media-button" onClick={() => output.media?.next()}>
                 next
               </button>
             </div>
+
+          
+            
+        
+         
             <div className="right">
               
               

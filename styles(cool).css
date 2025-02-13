@@ -190,3 +190,51 @@
    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
  }
  
+  /* General styling for media buttons */
+ .audio-button {
+   border: 2px solid rgba(168, 62, 62, 0.95);
+   background: linear-gradient(rgb(33, 28, 28), rgb(60, 54, 54));
+   color: rgb(255 255 255 / 90%);
+   border-radius: 20em;
+   line-height: 1;
+   padding: 4px 8px;
+   margin-right: 2px;
+   margin-left: 2px;
+   cursor: cell;
+   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+ }
+
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #04AA6D;
+  cursor: pointer;
+}
