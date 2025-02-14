@@ -22,7 +22,6 @@
         useState,
         useEffect,
         useRef,
-        useMemo,
       } from 'https://esm.sh/react@18?dev';
       import { createRoot } from 'https://esm.sh/react-dom@18/client?dev';
       import * as zebar from 'https://esm.sh/zebar@2';
@@ -32,7 +31,7 @@
         network: { type: 'network', refreshInterval: "20000"},
         glazewm: { type: 'glazewm' },
         cpu: { type: 'cpu', refreshInterval: "20000"},
-         media: { type: 'media', refreshInterval: "20000" },
+        media: { type: 'media' },
         date: { type: 'date', refreshInterval: "20000", formatting: 't' },
         audio: { type: 'audio', refreshInterval: "20000"},
         battery: { type: 'battery', refreshInterval: "20000" },
@@ -43,23 +42,11 @@
       createRoot(document.getElementById('root')).render(<App />);
 
       function App() {
-    const [output, setOutput] = useState(providers.outputMap);
+        const [output, setOutput] = useState(providers.outputMap);
 
-    useEffect(() => {
-        const updateOutput = () => {
-            setOutput(prevOutput => {
-                // Prevent unnecessary updates by checking if the value actually changed
-                return prevOutput !== providers.outputMap ? providers.outputMap : prevOutput;
-            });
-        };
-
-        providers.onOutput(updateOutput);
-
-        return () => {
-            // Cleanup to avoid memory leaks
-            providers.offOutput(updateOutput);
-        };
-    }, []);
+        useEffect(() => {
+          providers.onOutput(() => setOutput(providers.outputMap));
+        }, []);
 
         // Get icon to show for current network status.
         function getNetworkIcon(networkOutput) {
@@ -134,6 +121,9 @@
           }
         }
 
+
+
+        
 
 
 function MyControlledInput() {
