@@ -147,7 +147,8 @@ function MyControlledInput() {
                     type="range" min="0" max="100" 
                     onChange={onChange}
                     onMouseUp={handleSliderInput}
-                    value={value}/>
+                    value={value}
+                    class = "hide"/>
         </>
       );
     }
@@ -190,7 +191,7 @@ function MyControlledInput() {
               )}
 
 
-              <button className ="audio-button" onClick={() => output.audio?.setVolume(30)}>
+              <button className ="audio-button">
                 {(output.audio?.defaultPlaybackDevice?.volume >= 66) && (
                     <i className="nf nf-md-volume_high"></i>
                   )}
@@ -208,11 +209,12 @@ function MyControlledInput() {
                     <i className="nf nf-md-volume_off"></i>
                   )}
                 {output.audio?.defaultPlaybackDevice?.volume}%
+                <MyControlledInput />
               </button>
 
                     
 
-                    <MyControlledInput />
+                    
             </div>
 
             
